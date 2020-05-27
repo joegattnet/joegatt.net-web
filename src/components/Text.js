@@ -38,6 +38,9 @@ const Text = styled.section`
       font-size: 11px;
       line-height: 0;
       vertical-align: super;
+      &.squash {
+        margin-left: -2px;
+      }
     }
   }
   #annotations {

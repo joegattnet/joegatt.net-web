@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useQuery } from 'react-apollo-hooks';
-// import { UserContext } from '../helpers/UserContext';
+import { UserContext } from '../helpers/UserContext';
 import gql from 'graphql-tag';
 import React from 'react';
 import styled from 'styled-components';
@@ -10,8 +10,6 @@ const TEXTS_QUERY = gql`
     texts {
       nodes {
         id
-        title
-        body
         cachedUrl
         cachedBlurbHtml
       }
@@ -54,7 +52,6 @@ const StyledList = styled.div`
   }
 `;
 
-
 export default () => {
   const { loading, error, data, } = useQuery(TEXTS_QUERY);
   if (loading) return 'Loading...';
@@ -65,8 +62,6 @@ export default () => {
         {data.texts.nodes.map((text, index) => (
           <li key={text.id}>
             <div>
-              ||{text.title}||
-              <div to={text.cachedUrl} dangerouslySetInnerHTML={{ __html: text.body }} />
               <Link to={text.cachedUrl} dangerouslySetInnerHTML={{ __html: text.cachedBlurbHtml }} />
             </div>
           </li>

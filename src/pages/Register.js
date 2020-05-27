@@ -45,20 +45,24 @@ class Register extends Component {
             >
               <input
                 ref={node => { firstNameInput = node; }}
+                placeholder="Name"
                 required
               />
               <input
                 ref={node => { lastNameInput = node; }}
+                placeholder="Surname"
                 required
               />
               <input
                 ref={node => { emailInput = node; }}
                 type="email"
+                placeholder="Email"
                 required
               />
               <input
                 ref={node => { passwordInput = node; }}
                 type="password"
+                placeholder="Password"
                 pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                 required
               />
