@@ -10,6 +10,7 @@ const TEXTS_QUERY = gql`
     texts {
       nodes {
         id
+        role
         cachedUrl
         cachedBlurbHtml
       }
@@ -62,7 +63,7 @@ export default () => {
         {data.texts.nodes.map((text, index) => (
           <li key={text.id}>
             <div>
-              <Link to={text.cachedUrl} dangerouslySetInnerHTML={{ __html: text.cachedBlurbHtml }} />
+              {text.role} || <Link to={text.cachedUrl} dangerouslySetInnerHTML={{ __html: text.cachedBlurbHtml }} />
             </div>
           </li>
         ))}

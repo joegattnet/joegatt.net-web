@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { TAB } from '../variables';
 
-import { ArrowRight2 as Arrow } from 'styled-icons/icomoon';
+import { ArrowRight as Arrow } from 'styled-icons/typicons';
 
 const Arrow2 = styled(Arrow).attrs({ size: '2em' })`
   position: absolute;

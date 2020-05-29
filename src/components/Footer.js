@@ -9,11 +9,6 @@ import {
   LINE_HEIGHT,
   QR_CODE_WIDTH,
 } from '../variables';
-
-// https://styled-icons.js.org/
-
-// import ArrowA from './ArrowA';
-
 import { ArrowRight } from 'styled-icons/typicons';
 
 import {
@@ -37,6 +32,7 @@ import { Envelope } from 'styled-icons/fa-regular';
 import { Rss } from 'styled-icons/fa-solid';
 
 const Arrow = styled(ArrowRight).attrs({ size: '24px' })`
+  cursor: pointer;
   vertical-align: text-top;
 `;
 

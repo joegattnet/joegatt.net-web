@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import NavBar from './Nav';
-import Breadcrumb from './Breadcrumb';
+import Breadcrumb from '../Breadcrumb';
 
 const Ol = styled.section`
   padding: 0;

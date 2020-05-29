@@ -1,8 +1,7 @@
 import React, { useRef, useEffect } from 'react'
+import gql from 'graphql-tag';
 import { Link } from 'react-router-dom';
 import { useQuery } from 'react-apollo-hooks';
-import gql from 'graphql-tag';
-
 
 import Header from '../components/Header';
 import Body from '../components/Body';
@@ -15,9 +14,13 @@ const TEXT_QUERY = gql`
       cachedBodyHtml
       cachedHeadline
       cachedSubheadline
+      cachedUrl
       distance
       introduction
+      isFeature
+      featureId
       wordCount
+      role
     }
   }
 `;
@@ -32,8 +35,19 @@ export default ({ match }) => {
       <Header
         headline={data.text.cachedHeadline}
         subheadline={data.text.cachedSubheadline}
+        breadcrumbs={[
+          { href: '/texts', isLink: true, label: 'texts'},
+          { href: null, isLink: false, label: data.id },
+        ]}
       />
-      <Body cachedBodyHtml={data.text.cachedBodyHtml} annotationsCount={data.text.annotationsCount} />
+      <section id="content">
+        <Body cachedBodyHtml={data.text.cachedBodyHtml} annotationsCount={data.text.annotationsCount} />
+        <aside>
+          <section id="tags"></section>
+          {data.text.role !== 'unregistered' && <p><em>This note is only available to {data.text.role} users.</em></p>}
+          <section id="comments"></section>
+        </aside>
+      </section>
 
       {/* <Chart
         chartType="AreaChart"
