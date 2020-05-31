@@ -1,28 +1,27 @@
-import React from 'react';
+import React from "react";
 // import { Route, Switch, RouteComponentProps } from 'react-router-dom';
-import { Route, Switch } from 'react-router-dom';
-import styled, { createGlobalStyle } from 'styled-components';
+import { Route, Switch } from "react-router-dom";
+import styled, { createGlobalStyle } from "styled-components";
 
-//  import ArrowA from './components/ArrowA';
-import Footer from './components/Footer';
-// import Header from './components/Header';
+import Footer from "./components/Footer";
 
-import Api from './pages/Api';
-import Citations from './pages/Citations';
-import Feature from './pages/Feature';
-import Home from './pages/Home';
-import Links from './pages/Links';
-import Login from './pages/Login';
-import LoginToolbar from './pages/LoginToolbar';
-import Register from './pages/Register';
-import Tags from './pages/Tags';
-import Text from './pages/Text';
-import Texts from './pages/Texts';
+import Api from "./pages/Api";
+import Citations from "./pages/Citations";
+import Feature from "./pages/Feature";
+import Home from "./pages/Home";
+import Links from "./pages/Links";
+import Login from "./pages/Login";
+import LoginToolbar from "./pages/LoginToolbar";
+import Register from "./pages/Register";
+import Tags from "./pages/Tags";
+import Text from "./pages/Text";
+import Texts from "./pages/Texts";
 
-import { UserContext, UserContextProvider } from './helpers/UserContext';
+import { UserContext, UserContextProvider } from "./helpers/UserContext";
 
 import {
   BLACK,
+  BLUE,
   CONTENT_COLUMNS_SPAN,
   CONTENT_COLUMNS_START,
   DESKTOP_BREAKPOINT,
@@ -30,11 +29,12 @@ import {
   PAGE_COLUMNS_SPAN,
   RED,
   SANS_FONT_SIZE,
-  TAB,
+  TAB_WIDTH,
   TITLE_FONT_SIZE,
   TITLE_LINE_HEIGHT,
   WHITE,
-} from './variables';
+  YELLOW,
+} from "./variables";
 
 const GlobalStyles = createGlobalStyle`
   html,
@@ -64,39 +64,51 @@ const GlobalStyles = createGlobalStyle`
   a {
     color: ${BLACK};
     text-decoration: none;
+    &:hover {
+      color: ${RED};
+    }
     &[href*=//]:hover {
-      color: blue;
+      color: ${BLUE};
     }
   }
   ol,
   ul {
     list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  .count {
+    color: ${RED};
+  }
+  ::selection {
+    background: ${YELLOW};
+    text-shadow: none;
   }
 `;
 
 const StyledPage = styled.div`
-  ${'' /* font-family: 'Roboto', sans-serif; */}
+  ${"" /* font-family: 'Roboto', sans-serif; */}
   font-family: 'Lato', sans-serif;
-  padding: 0 ${TAB} ${LINE_HEIGHT};
+  padding: 0 ${TAB_WIDTH} ${LINE_HEIGHT};
 
   @media screen and (min-width: ${DESKTOP_BREAKPOINT}) {
     display: grid;
-    grid-column-gap: ${TAB};
+    grid-column-gap: ${TAB_WIDTH};
     grid-template-columns: repeat(${PAGE_COLUMNS_SPAN}, 1fr);
   }
 
   #content {
     grid-column-end: span ${CONTENT_COLUMNS_SPAN};
     grid-column-start: ${CONTENT_COLUMNS_START};
+    margin-bottom: ${LINE_HEIGHT};
   }
 `;
 
 // const App: React.FunctionComponent<RouteComponentProps> = () => (
 const App = () => (
-    <StyledPage className="App">
+  <StyledPage className="App">
     <GlobalStyles />
     <UserContextProvider>
-      {/* <Header /> */}
       <section id="content">
         <Switch>
           <Route path="/texts/:id" component={Text} />
@@ -112,19 +124,8 @@ const App = () => (
         </Switch>
       </section>
       <Footer />
-      <hr />
-      {/* <footer className="App-header">
-            <ul>
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/texts">Texts</Link></li>
-              <li><Link to="/citations">Citations</Link></li>
-              <li><Link to="/links">Links</Link></li>
-              <li><Link to="/tags">Tags</Link></li>
-              <li><Link to="/api">API</Link></li>
-            </ul>
-          </footer> */}
       <UserContext.Consumer>
-        {({user}) => user.signedIn? <LoginToolbar /> : <Login />}
+        {({ user }) => (user.signedIn ? <LoginToolbar /> : <Login />)}
       </UserContext.Consumer>
     </UserContextProvider>
   </StyledPage>

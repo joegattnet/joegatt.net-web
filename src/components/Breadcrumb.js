@@ -1,26 +1,17 @@
-import React, { PropTypes } from 'react';
-import styled from 'styled-components';
-import { TAB } from '../variables';
-import { ArrowRight } from 'styled-icons/typicons';
+import React, { PropTypes } from "react";
+import styled from "styled-components";
+import { TAB_WIDTH } from "../variables";
+import ArrowLink from "./ArrowLink";
 
 const Li = styled.li`
   display: inline-block;
-  margin-right: ${TAB};
+  margin-right: ${TAB_WIDTH};
   text-transform: lowercase;
 `;
 
-const Arrow = styled(ArrowRight).attrs({ size: '24px' })`
-  cursor: pointer;
-  vertical-align: text-top;
-`;
-
-const Breadcrumb = ({ data: 
-  {href,
-  isLink,
-  label,
-}}) => (
+const Breadcrumb = ({ data: { href, isLink, label } }) => (
   <Li>
-    {isLink ? <a href={href}><Arrow />{label}</a> : <span><Arrow />{label}</span>}
+    <ArrowLink href={isLink && href}>{label}</ArrowLink>
   </Li>
 );
 

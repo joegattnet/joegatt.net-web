@@ -7,16 +7,16 @@ import {
   ANNOTATIONS_LINE_HEIGHT,
   DESKTOP_BREAKPOINT,
   FONT_SIZE,
-  HALF_TAB,
+  HALF_TAB_WIDTH,
   RED,
-  TAB
+  TAB_WIDTH
 } from '../variables';
 
 const StyedBody = styled.section`
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
   grid-template-rows: auto;
-  grid-column-gap: ${TAB};
+  grid-column-gap: ${TAB_WIDTH};
   .body {
     font-family: 'Roboto Slab', serif;
     font-weight: 400;
@@ -32,7 +32,7 @@ const StyedBody = styled.section`
     overflow: hidden;
     ${'' /* position: relative; */}
     text-align: justify;
-    text-indent: ${TAB};
+    text-indent: ${TAB_WIDTH};
     &:first-of-type {
       text-indent: 0;
     }
@@ -71,7 +71,7 @@ const StyedBody = styled.section`
         a:first-of-type {
           color: ${RED};
           display: inline-block;
-          min-width: ${HALF_TAB};
+          min-width: ${HALF_TAB_WIDTH};
           &:after {
             content: '. ';
           }
@@ -95,7 +95,7 @@ const StyedBody = styled.section`
       a:first-of-type {
         color: ${RED};
         display: inline-block;
-        min-width: ${HALF_TAB};
+        min-width: ${HALF_TAB_WIDTH};
         &:before {
           content: 'v';
         }

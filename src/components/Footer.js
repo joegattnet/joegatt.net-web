@@ -33,7 +33,7 @@ import { Rss } from 'styled-icons/fa-solid';
 
 const Arrow = styled(ArrowRight).attrs({ size: '24px' })`
   cursor: pointer;
-  vertical-align: text-top;
+  vertical-align: bottom;
 `;
 
 const CreativeCommonsIcon = styled(CreativeCommons).attrs({ size: '14px' })`
@@ -100,7 +100,7 @@ const RssIcon = styled(Rss).attrs({ size: '14px' })`
 `;
 
 const SoundcloudLogo = styled(Soundcloud).attrs({ size: '18px' })`
-  vertical-align: top;
+  vertical-align: -1px;
   margin-right: 6px;
 `;
 
@@ -136,7 +136,6 @@ const Nav = styled.nav`
     display: grid;
     grid-column-gap: ${LINE_HEIGHT};
     grid-template-columns: repeat(${CONTENT_COLUMNS_SPAN}, 1fr);
-    margin: 0;
     width: 100%;
   }
   a {
