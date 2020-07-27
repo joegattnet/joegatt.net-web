@@ -6,6 +6,7 @@ import styled, { createGlobalStyle } from "styled-components";
 import Footer from "./components/Footer";
 
 import Api from "./pages/Api";
+import Citation from "./pages/Citation";
 import Citations from "./pages/Citations";
 import Feature from "./pages/Feature";
 import Home from "./pages/Home";
@@ -111,12 +112,13 @@ const App = () => (
     <UserContextProvider>
       <section id="content">
         <Switch>
-          <Route path="/texts/:id" component={Text} />
-          <Route exact path="/texts" component={Texts} />
-          <Route exact path="/citations" component={Citations} />
-          <Route exact path="/links" component={Links} />
-          <Route exact path="/tags" component={Tags} />
           <Route exact path="/api" component={Api} />
+          <Route path="/citations/:id" component={Citation} />
+          <Route exact path="/citations" component={Citations} />
+          <Route path="/texts/:id" component={Text} />
+          <Route exact path="/tags" component={Tags} />
+          <Route exact path="/texts" component={Texts} />
+          <Route exact path="/links" component={Links} />
           <Route exact path="/user/register" component={Register} />
           <Route exact path="/:feature/:featureId" component={Feature} />
           <Route exact path="/:feature" component={Feature} />

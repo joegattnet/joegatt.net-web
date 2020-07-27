@@ -1,62 +1,78 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import React, { useRef, useEffect } from "react";
+import gql from "graphql-tag";
+import { useQuery } from "react-apollo-hooks";
+import Header from "../components/Header";
+import Body from "../components/Body";
 
-class Citation extends Component {
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.location.key !== nextProps.location.key) {
-      this.props.NoteQuery.refetch()
-    }
-  }
-
-  render() {
-    if (this.props.NoteQuery.loading) {
-      return (
-        <div>
-          Loading...
-        </div>
-      )
-    }
-    if (this.props.NoteQuery.error) {
-      console.error('ERROR!!!', this.props.NoteQuery);
-      return (
-        <div>
-          Error!
-        </div>
-      )
-    }
-    return (
-      <div>
-        <h1 dangerouslySetInnerHTML={{ __html: this.props.NoteQuery.noteById.cachedHeadline }} />
-        <section dangerouslySetInnerHTML={{ __html: this.props.NoteQuery.noteById.cachedBodyHtml }} />
-        {this.props.children}
-      </div>
-    )
-  }
-}
-
-const NOTE_QUERY = gql`
-  query NoteQuery($noteId: Int!) {
-    noteById (id: $noteId) {
+const CITATION_QUERY = gql`
+  query CitationQuery($citationId: Int) {
+    citation(uid: $citationId) {
       id
       cachedBodyHtml
       cachedHeadline
+      cachedSubheadline
+      cachedUrl
+      role
+    }
+    activeTagsForNote(noteId: $citationId) {
+      nodes {
+        name
+        slug
+      }
+    }
+    instructionsForNote(noteId: $citationId) {
+      nodes
     }
   }
 `;
 
-// Stored proc: SELECT name, slug FROM tags, taggings WHERE taggable_type = 'Note' AND taggable_id = 164 AND taggings.concitation = 'tags' AND tags.id = taggings.tag_id
+export default ({ match }) => {
+  const { loading, error, data } = useQuery(CITATION_QUERY, {
+    variables: { citationId: parseInt(match.params.id, 10) },
+  });
+  if (loading) return "Loading...";
+  if (error) return `Error! ${error.message}`;
 
-const ComponentWithQuery = graphql(NOTE_QUERY, {
-  name: 'NoteQuery',
-  options: ({ match }) => ({
-    fetchPolicy: 'network-only',
-    variables: {
-      noteId: match.params.id,
-    },
-  }),
-})(Citation);
+  return (
+    <article>
+      <Header
+        headline={data.citation.cachedHeadline}
+        subheadline={data.citation.cachedSubheadline}
+        breadcrumbs={[
+          { href: "/citationss", isLink: true, label: "citationss" },
+          { href: null, isLink: false, label: data.id },
+        ]}
+      />
+      <section>
+        <div
+          dangerouslySetInnerHTML={{ __html: data.citation.cachedBodyHtml }}
+        />
+        <aside>
+          {data.citation.role !== "unregistered" && (
+            <p>
+              <em>
+                This citation is only available to {data.citation.role} users.
+              </em>
+            </p>
+          )}
+          <section id="tags">
+            <ul>
+              {data.activeTagsForNote.nodes.map((tag) => (
+                <li>{tag.name} </li>
+              ))}
+            </ul>
+          </section>
+          <section id="comments"></section>
+        </aside>
+      </section>
 
-export default withRouter(ComponentWithQuery);
+      {/* <Chart
+        chartType="AreaChart"
+        data={[["Age", "Weight"], [4, 5.5], [4.5, 3.5], [4.75, 3.5], [4.825, 3.5], [5, 5.9], [5.5, 11], [6, 2.1], [6.5, 2.3], [7, 7.9], [7.5, 4.1], [8, 12], [9.1, 13]]}
+        width="100%"
+        height="400px"
+        legendToggle
+      /> */}
+    </article>
+  );
+};

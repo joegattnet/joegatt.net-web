@@ -1,6 +1,6 @@
-import React, { Component, createRef } from 'react'
-import parse, { domToReact } from 'html-react-parser';
-import styled from 'styled-components';
+import React, { Component, createRef } from "react";
+import parse, { domToReact } from "html-react-parser";
+import styled from "styled-components";
 
 import {
   ANNOTATIONS_FONT_SIZE,
@@ -9,8 +9,8 @@ import {
   FONT_SIZE,
   HALF_TAB_WIDTH,
   RED,
-  TAB_WIDTH
-} from '../variables';
+  TAB_WIDTH,
+} from "../variables";
 
 const StyedBody = styled.section`
   display: grid;
@@ -18,7 +18,7 @@ const StyedBody = styled.section`
   grid-template-rows: auto;
   grid-column-gap: ${TAB_WIDTH};
   .body {
-    font-family: 'Roboto Slab', serif;
+    font-family: "Roboto Slab", serif;
     font-weight: 400;
     position: relative;
     grid-column: 1 / span 1;
@@ -30,7 +30,7 @@ const StyedBody = styled.section`
     hyphens: auto;
     margin: 0;
     overflow: hidden;
-    ${'' /* position: relative; */}
+    ${"" /* position: relative; */}
     text-align: justify;
     text-indent: ${TAB_WIDTH};
     &:first-of-type {
@@ -47,7 +47,7 @@ const StyedBody = styled.section`
     }
   }
   #annotations {
-    font-family: 'Roboto Slab', serif;
+    font-family: "Roboto Slab", serif;
     font-size: 14px;
     font-weight: 300;
     grid-row: 2 / span 1;
@@ -73,7 +73,7 @@ const StyedBody = styled.section`
           display: inline-block;
           min-width: ${HALF_TAB_WIDTH};
           &:after {
-            content: '. ';
+            content: ". ";
           }
         }
       }
@@ -97,7 +97,7 @@ const StyedBody = styled.section`
         display: inline-block;
         min-width: ${HALF_TAB_WIDTH};
         &:before {
-          content: 'v';
+          content: "v";
         }
       }
     }
@@ -122,7 +122,7 @@ class Body extends Component {
     let correctedTop = minimum;
     this.annotationMarks.forEach((annotationMark, index) => {
       newTop = annotationMark.current.offsetTop;
-      correctedTop = (newTop <= minimum ? minimum : newTop);
+      correctedTop = newTop <= minimum ? minimum : newTop;
       console.log(correctedTop);
       this.annotations[index].current.style.top = `${correctedTop}px`;
       minimum = correctedTop + this.annotations[index].current.offsetHeight;
@@ -135,7 +135,10 @@ class Body extends Component {
     reversedAnnotations.forEach((annotation, index) => {
       newTop = annotation.current.offsetTop;
       newBottom = newTop + annotation.current.offsetHeight;
-      correctedTop = newBottom > maximum ? maximum - annotation.current.offsetHeight : newTop;
+      correctedTop =
+        newBottom > maximum
+          ? maximum - annotation.current.offsetHeight
+          : newTop;
       this.annotations[index].current.style.top = `${correctedTop}px`;
       maximum = correctedTop;
     });
@@ -143,29 +146,44 @@ class Body extends Component {
 
   render() {
     const { cachedBodyHtml } = this.props;
-    const options = { replace:
-      ({ attribs, children }) => {
+    const options = {
+      replace: ({ attribs, children }) => {
         if (!attribs) return;
-        if (attribs.class && attribs.class.includes('annotation-mark')) {
+        if (attribs.class && attribs.class.includes("annotation-mark")) {
           const index = parseInt(children[0].data, 10);
           return (
-            <a class={attribs.class} href={`#annotation-${ index }`} ref={this.annotationMarks[index - 1]} id={`annotation-mark-${ index }`}>
+            <a
+              class={attribs.class}
+              href={`#annotation-${index}`}
+              ref={this.annotationMarks[index - 1]}
+              id={`annotation-mark-${index}`}
+            >
               {domToReact(children, options)}
             </a>
           );
         }
-        if (attribs.class === 'annotations-container') {
+        if (attribs.class === "annotations-container") {
           return (
-              <ol>{children.map((item, index) => (
-                <li id={`annotation-${ index + 1 }`} ref={this.annotations[index]}>
-                <a href={`#annotation-${ index + 1 }`}>{index + 1}</a>{item.children[0].data}
-              </li>
-            ))}</ol>
+            <ol>
+              {children.map((item, index) => (
+                <li
+                  id={`annotation-${index + 1}`}
+                  ref={this.annotations[index]}
+                >
+                  <a href={`#annotation-${index + 1}`}>{index + 1}</a>
+                </li>
+              ))}
+            </ol>
           );
         }
-      }};
-  
-    return <StyedBody ref={this.bodyContainer}>{parse(cachedBodyHtml, options)}</StyedBody>;
+      },
+    };
+
+    return (
+      <StyedBody ref={this.bodyContainer}>
+        {parse(cachedBodyHtml, options)}
+      </StyedBody>
+    );
   }
 }
 

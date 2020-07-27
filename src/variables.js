@@ -2,6 +2,7 @@ import { stripUnit } from "polished";
 export const RATIO = 1.61803399;
 
 export const BLACK = "#222";
+export const GRAY = "#ccc";
 export const BLUE = "#009";
 export const CONTENT_COLUMNS_SPAN = 24;
 export const DESKTOP_BREAKPOINT = "1300px";

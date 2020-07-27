@@ -11,6 +11,8 @@ const CITATIONS_QUERY = gql`
         id
         cachedUrl
         cachedBlurbHtml
+        body
+        title
       }
     }
   }
@@ -43,6 +45,8 @@ export default () => {
                   to={citation.cachedUrl}
                   dangerouslySetInnerHTML={{ __html: citation.cachedBlurbHtml }}
                 />
+                <h4>{citation.title}</h4>
+                <strong>||{JSON.stringify(citation.body)}||</strong>
               </li>
             );
           })}
