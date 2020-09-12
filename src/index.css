@@ -5,6 +5,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  a {
+    /* For nice underline see our existing one, or this: https://www.webfactory.de/blog/use-ssh-key-for-private-repositories-in-github-actions */
+  }
 }
 
 code {
