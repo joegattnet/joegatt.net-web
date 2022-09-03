@@ -26,4 +26,4 @@ jobs:
           ssh-add ~/.ssh/id_rsa_deploykey_unsigned
           git pull
           cd ..
-          docker-compose -f docker-compose-prod.yml up -d --build factory
+          docker-compose -f docker-compose-prod.yml up -d --build web
