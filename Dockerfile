@@ -1,20 +1,23 @@
-# pull official base image
-FROM node:13.12.0-alpine
+FROM node:12-alpine AS builder
 
-# set working directory
-WORKDIR /app
-
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
-
-# install app dependencies
-COPY package.json ./
-COPY package-lock.json ./
+WORKDIR /usr/src/app
+COPY package*.json ./
+# COPY googledocs.*.json ./
+# COPY .env ./
+# COPY tsconfig.json ./
 RUN npm install
-# RUN npm install react-scripts@3.4.1 -g
+COPY ./src ./src
+# RUN npm run build
+EXPOSE 3000
 
-# add app
-COPY . ./
+FROM node:12-alpine
 
-# start app
+WORKDIR /usr/src/app
+COPY package*.json ./
+# COPY googledocs.*.json ./
+# COPY .env ./
+RUN npm install --only=production
+# COPY --from=builder /usr/src/app/dist ./dist
+COPY --from=builder /usr/src/app/src ./src
+EXPOSE 3007
 CMD ["npm", "start"]
