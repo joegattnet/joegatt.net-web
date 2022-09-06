@@ -75,7 +75,8 @@ export const client = new ApolloClient({
       cache
     }),
     new HttpLink({
-      uri: 'http://localhost:5000/graphql',
+      uri: 'https://graphql.joegatt.net/graphql',
+      // uri: 'http://localhost:5000/graphql',
       // credentials: 'same-origin'
     })
   ]),

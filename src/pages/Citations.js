@@ -30,7 +30,7 @@ export default () => {
           { href: "/citations", isLink: false, label: "citations" },
         ]}
       />
-      <section class="citations">
+      <section className="citations">
         <header>
           <h3>Citations</h3>
         </header>
@@ -45,8 +45,6 @@ export default () => {
                   to={citation.cachedUrl}
                   dangerouslySetInnerHTML={{ __html: citation.cachedBlurbHtml }}
                 />
-                <h4>{citation.title}</h4>
-                <strong>||{JSON.stringify(citation.body)}||</strong>
               </li>
             );
           })}

@@ -36,10 +36,10 @@ export default ({ match }) => {
   return (
     <article>
       <Header
-        headline={data.citation.cachedHeadline}
-        subheadline={data.citation.cachedSubheadline}
+        headline="Citations"
+        subheadline=""
         breadcrumbs={[
-          { href: "/citationss", isLink: true, label: "citationss" },
+          { href: "/citations", isLink: true, label: "citations" },
           { href: null, isLink: false, label: data.id },
         ]}
       />
